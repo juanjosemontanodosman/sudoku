@@ -20,7 +20,7 @@ public class Model {
 
     public int getHint(int row, int col) throws Exception{
         if (hintUsages > hintUsagesLimit){
-            throw new Exception("Se sobrepasó el límite de ayudas");
+            throw new Exception("No se puede dar la pista. Se sobrepasó el límite de ayudas");
         }
 
         int num = 1;
@@ -29,7 +29,7 @@ public class Model {
         }
 
         if (num > 6){
-            throw new Exception("No possible number is valid in given position \""+row+", "+col+"\"");
+            throw new Exception("Ningún número es válido en la posición ("+row+", "+col+")");
         }
 
         hintUsages++;
