@@ -105,11 +105,6 @@ public class Model implements IModel {
         Collections.copy(board, hintsBoard);
     }
 
-    /** Public method for accessing the board*/
-    public Board getBoard(){
-        return new Board(board);
-    }
-
     public int getBoardWidth(){
         return boardWidth;
     }
