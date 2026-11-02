@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+  Sudoku 6x6 view.
+  fx:id that the controller can use:
+    boardGridPane  -> GridPane with the 36 cells (TextField). Each cell knows its
+                      position with GridPane.getRowIndex(cell) and GridPane.getColumnIndex(cell)
+    newGameButton  -> "Nuevo juego" button
+    helpButton     -> "Ayuda" button
+    messageLabel   -> label for messages (errors, hints, etc.)
+  CSS classes the controller can add or remove on a cell:
+    cell-error (red border), cell-hint (suggested number), cell-fixed (initial numbers)
+-->
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.sudoku.controller.Controller"
+            styleClass="root-pane" stylesheets="@styles.css">
+    <padding>
+        <Insets top="24" right="24" bottom="24" left="24"/>
+    </padding>
+
+    <!-- Title -->
+    <top>
+        <VBox alignment="CENTER" spacing="4">
+            <Label text="Sudoku 6x6" styleClass="title"/>
+            <Label text="Completa cada fila, columna y bloque de 2x3 con los números del 1 al 6"
+                   styleClass="subtitle" wrapText="true"/>
+        </VBox>
+    </top>
+
+    <!-- Board: 6 rows x 6 columns, blocks of 2 rows x 3 columns -->
+    <center>
+        <StackPane>
+            <padding>
+                <Insets top="20" bottom="20"/>
+            </padding>
+            <GridPane fx:id="boardGridPane" styleClass="board" maxWidth="-Infinity" maxHeight="-Infinity">
+                <TextField styleClass="cell" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField styleClass="cell" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <TextField styleClass="cell, cell-border-right" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <TextField styleClass="cell" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                <TextField styleClass="cell" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+                <TextField styleClass="cell" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+                <TextField styleClass="cell, cell-border-bottom" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField styleClass="cell, cell-border-bottom" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <TextField styleClass="cell, cell-border-both" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <TextField styleClass="cell, cell-border-bottom" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                <TextField styleClass="cell, cell-border-bottom" GridPane.rowIndex="1" GridPane.columnIndex="4"/>
+                <TextField styleClass="cell, cell-border-bottom" GridPane.rowIndex="1" GridPane.columnIndex="5"/>
+                <TextField styleClass="cell" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField styleClass="cell" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <TextField styleClass="cell, cell-border-right" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                <TextField styleClass="cell" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+                <TextField styleClass="cell" GridPane.rowIndex="2" GridPane.columnIndex="4"/>
+                <TextField styleClass="cell" GridPane.rowIndex="2" GridPane.columnIndex="5"/>
+                <TextField styleClass="cell, cell-border-bottom" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField styleClass="cell, cell-border-bottom" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <TextField styleClass="cell, cell-border-both" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+                <TextField styleClass="cell, cell-border-bottom" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+                <TextField styleClass="cell, cell-border-bottom" GridPane.rowIndex="3" GridPane.columnIndex="4"/>
+                <TextField styleClass="cell, cell-border-bottom" GridPane.rowIndex="3" GridPane.columnIndex="5"/>
+                <TextField styleClass="cell" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField styleClass="cell" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <TextField styleClass="cell, cell-border-right" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
+                <TextField styleClass="cell" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
+                <TextField styleClass="cell" GridPane.rowIndex="4" GridPane.columnIndex="4"/>
+                <TextField styleClass="cell" GridPane.rowIndex="4" GridPane.columnIndex="5"/>
+                <TextField styleClass="cell" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <TextField styleClass="cell" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                <TextField styleClass="cell, cell-border-right" GridPane.rowIndex="5" GridPane.columnIndex="2"/>
+                <TextField styleClass="cell" GridPane.rowIndex="5" GridPane.columnIndex="3"/>
+                <TextField styleClass="cell" GridPane.rowIndex="5" GridPane.columnIndex="4"/>
+                <TextField styleClass="cell" GridPane.rowIndex="5" GridPane.columnIndex="5"/>
+            </GridPane>
+        </StackPane>
+    </center>
+
+    <!-- Messages and buttons -->
+    <bottom>
+        <VBox alignment="CENTER" spacing="14">
+            <Label fx:id="messageLabel" text="Presiona &quot;Nuevo juego&quot; para empezar"
+                   styleClass="message" wrapText="true"/>
+            <HBox alignment="CENTER" spacing="16">
+                <Button fx:id="newGameButton" text="Nuevo juego" styleClass="primary-button"/>
+                <Button fx:id="helpButton" text="Ayuda" styleClass="secondary-button"/>
+            </HBox>
+        </VBox>
+    </bottom>
+</BorderPane>

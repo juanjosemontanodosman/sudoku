@@ -1,0 +1,113 @@
+/* ================================================
+   Sudoku 6x6 - styles
+   ================================================ */
+
+.root-pane {
+    -fx-background-color: #f1f5f9;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ---------- Title ---------- */
+.title {
+    -fx-text-fill: #1e3a8a;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+
+.subtitle {
+    -fx-text-fill: #475569;
+    -fx-font-size: 13px;
+    -fx-text-alignment: center;
+}
+
+/* ---------- Board ---------- */
+.board {
+    -fx-border-color: #1e3a8a;
+    -fx-border-width: 3;
+    -fx-background-color: #1e3a8a;
+}
+
+/* Normal cell */
+.cell {
+    -fx-pref-width: 64px;
+    -fx-pref-height: 64px;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: #1e293b;
+    -fx-background-color: white;
+    -fx-background-radius: 0;
+    -fx-border-color: #cbd5e1;
+    -fx-border-width: 0 1 1 0;
+}
+
+.cell:focused {
+    -fx-background-color: #dbeafe;
+}
+
+/* Thicker borders to separate the 2x3 blocks */
+.cell-border-right {
+    -fx-border-color: #1e3a8a #1e3a8a #cbd5e1 #cbd5e1;
+    -fx-border-width: 0 3 1 0;
+}
+
+.cell-border-bottom {
+    -fx-border-color: #cbd5e1 #cbd5e1 #1e3a8a #cbd5e1;
+    -fx-border-width: 0 1 3 0;
+}
+
+.cell-border-both {
+    -fx-border-color: #1e3a8a;
+    -fx-border-width: 0 3 3 0;
+}
+
+/* States that the controller can apply */
+.cell-fixed {
+    -fx-text-fill: #1e3a8a;
+    -fx-background-color: #e2e8f0;
+}
+
+.cell-error {
+    -fx-border-color: #dc2626;
+    -fx-border-width: 3;
+    -fx-text-fill: #dc2626;
+}
+
+.cell-hint {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #b45309;
+}
+
+/* ---------- Messages ---------- */
+.message {
+    -fx-text-fill: #334155;
+    -fx-font-size: 14px;
+    -fx-text-alignment: center;
+}
+
+/* ---------- Buttons ---------- */
+.primary-button, .secondary-button {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 26;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+}
+
+.primary-button {
+    -fx-background-color: #1e3a8a;
+    -fx-text-fill: white;
+}
+
+.primary-button:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+.secondary-button {
+    -fx-background-color: #f59e0b;
+    -fx-text-fill: #1e293b;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #fbbf24;
+}
