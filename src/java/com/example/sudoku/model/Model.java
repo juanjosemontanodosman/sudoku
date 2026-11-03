@@ -88,7 +88,7 @@ public class Model implements IModel {
         hintsBoard.initialize(boardWidth, boardHeight);
         board.initialize(boardWidth, boardHeight);
 
-        int number;
+
         boolean boardIsIncomplete;
         do {
             solutionBoard.initialize(boardWidth, boardHeight);
