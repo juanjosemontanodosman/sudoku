@@ -37,7 +37,7 @@ public class Model implements IModel {
     private static final short hintUsagesLimit = 6;
 
     /** The number of initial hints the user gets per block*/
-    private static final int initialEntriesPerBlock = 6;
+    private static final int initialEntriesPerBlock = 2;
 
     /** Maximum number that can be placed on the board*/
     private static final int maxNumber = boardWidth;
