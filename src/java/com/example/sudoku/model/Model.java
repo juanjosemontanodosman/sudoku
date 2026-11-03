@@ -36,6 +36,9 @@ public class Model implements IModel {
     /** Maximum amount of hints the user gets*/
     private static final short hintUsagesLimit = 6;
 
+    /** The number of initial hints the user gets per block*/
+    private static final int initialEntriesPerBlock = 6;
+
     /** Maximum number that can be placed on the board*/
     private static final int maxNumber = boardWidth;
 
@@ -53,12 +56,12 @@ public class Model implements IModel {
                     for (int i = 0; i < blockHeight; i++){
                         for (int j = 0; j < blockWidth; j++){
                             // For every entry on that block
-                            if (entriesOnBlock <2 && ((int)(Math.random()*(6-3*i-j)) <= 1 || (6-3*i-j <=  2-entriesOnBlock))){
+                            if (entriesOnBlock <initialEntriesPerBlock && ((int)(Math.random()*(6-3*i-j)) <= 1 || (6-3*i-j <=  initialEntriesPerBlock-entriesOnBlock))){
                                 entriesOnBlock++;
                                 this.setEntry(i+(a*blockHeight), j+(b*blockWidth), solution.getEntry(i+(a*blockHeight), j+(b*blockWidth)));
                             }
                         }
-                        if (entriesOnBlock >= 2){ break; }
+                        if (entriesOnBlock >= initialEntriesPerBlock){ break; }
                     }
                 }
             }
