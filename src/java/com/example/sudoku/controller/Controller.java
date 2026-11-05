@@ -18,38 +18,79 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Controlador del juego Sudoku 6x6.
+ * <p>
+ * Conecta la vista ({@code game-view.fxml}) con el {@link IModel} para gestionar
+ * la interacción del usuario con el tablero.
+ * </p>
+ *
+ * @author [Roiban Rosales Bastidas]
+ */
 public class Controller {
 
+    /** Clase CSS para indicar un error en una celda. */
     private static final String STYLE_ERROR = "cell-error";
+
+    /** Clase CSS para los números iniciales fijos. */
     private static final String STYLE_FIXED = "cell-fixed";
+
+    /** Clase CSS para resaltar una pista. */
     private static final String STYLE_HINT = "cell-hint";
+
+    /** Clase CSS para el texto de error en el label de mensajes. */
     private static final String STYLE_MESSAGE_ERROR = "message-error";
 
+    /** Lógica del juego. */
     private final IModel model = new Model();
+
+    /** Gestor de ventanas de alerta. */
     private final IAlertBox alertBox = new AlertBox();
+
+    /** Generador de números aleatorios. */
     private final Random random = new Random();
 
+    /** Tablero gráfico con las celdas. */
     @FXML
     private GridPane boardGridPane;
 
+    /** Botón para iniciar un nuevo juego. */
     @FXML
     private Button newGameButton;
 
+    /** Botón para pedir una ayuda. */
     @FXML
     private Button helpButton;
 
+    /** Etiqueta para mostrar mensajes al usuario. */
     @FXML
     private Label messageLabel;
 
+    /** Matriz bidimensional que almacena las celdas de texto del tablero. */
     private TextField[][] cells;
+
+    /** Matriz que indica qué celdas están bloqueadas (fijas o pistas). */
     private boolean[][] locked;
+
+    /** Fila de la celda seleccionada actualmente (-1 si no hay ninguna). */
     private int selectedRow = -1;
+
+    /** Columna de la celda seleccionada actualmente (-1 si no hay ninguna). */
     private int selectedCol = -1;
+
+    /** Indica si el juego ha comenzado (se ha presionado "Nuevo juego"). */
     private boolean gameStarted = false;
 
+    /**
+     * Constructor por defecto del controlador.
+     */
     public Controller() {
     }
 
+    /**
+     * Inicializa el controlador. Se ejecuta automáticamente al cargar el FXML.
+     * Recoge las celdas del GridPane y configura sus eventos.
+     */
     @FXML
     private void initialize() {
         cells = new TextField[model.getBoardHeight()][model.getBoardWidth()];
@@ -68,6 +109,13 @@ public class Controller {
         helpButton.setOnAction(event -> onHelp());
     }
 
+    /**
+     * Configura los eventos de ratón y teclado de una celda específica.
+     *
+     * @param cell la celda (TextField) a configurar
+     * @param row  la fila donde se encuentra la celda
+     * @param col  la columna donde se encuentra la celda
+     */
     private void setUpCell(TextField cell, int row, int col) {
         cell.setEditable(false);
         cell.setOnMouseClicked(event -> selectCell(row, col));
@@ -81,6 +129,12 @@ public class Controller {
         cell.addEventFilter(KeyEvent.KEY_PRESSED, event -> onKeyPressed(event, row, col));
     }
 
+    /**
+     * Selecciona una celda dándole el foco.
+     *
+     * @param row fila de la celda
+     * @param col columna de la celda
+     */
     private void selectCell(int row, int col) {
         selectedRow = row;
         selectedCol = col;
@@ -88,6 +142,13 @@ public class Controller {
         cells[row][col].deselect();
     }
 
+    /**
+     * Maneja la escritura por teclado, permitiendo solo números válidos del 1 al 6.
+     *
+     * @param event el evento de teclado
+     * @param row   fila de la celda
+     * @param col   columna de la celda
+     */
     private void onKeyTyped(KeyEvent event, int row, int col) {
         event.consume();
         String typed = event.getCharacter();
@@ -109,6 +170,13 @@ public class Controller {
         placeNumber(row, col, character - '0');
     }
 
+    /**
+     * Maneja teclas especiales como Backspace y Delete para borrar números.
+     *
+     * @param event el evento de teclado
+     * @param row   fila de la celda
+     * @param col   columna de la celda
+     */
     private void onKeyPressed(KeyEvent event, int row, int col) {
         if (event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.DELETE) {
             event.consume();
@@ -120,6 +188,13 @@ public class Controller {
         }
     }
 
+    /**
+     * Coloca un número en una celda si no está bloqueada.
+     *
+     * @param row   fila de la celda
+     * @param col   columna de la celda
+     * @param value el número a colocar
+     */
     private void placeNumber(int row, int col, int value) {
         if (locked[row][col]) {
             showMessage("Esa casilla es una pista y no se puede cambiar.", true);
@@ -135,6 +210,12 @@ public class Controller {
         updateValidation(row, col);
     }
 
+    /**
+     * Borra el número de una celda si no está bloqueada.
+     *
+     * @param row fila de la celda
+     * @param col columna de la celda
+     */
     private void clearNumber(int row, int col) {
         if (locked[row][col]) {
             showMessage("Esa casilla es una pista y no se puede borrar.", true);
@@ -153,6 +234,9 @@ public class Controller {
         updateValidation(row, col);
     }
 
+    /**
+     * Inicia un nuevo juego tras pedir confirmación al usuario.
+     */
     private void onNewGame() {
         String header = gameStarted ? "¿Iniciar un nuevo juego?" : "¿Empezar a jugar?";
         String content = gameStarted ? "Se perderá el progreso del juego actual." : "Se generará un tablero nuevo.";
@@ -169,6 +253,9 @@ public class Controller {
                 + model.getBoardWidth() + ".", false);
     }
 
+    /**
+     * Pinta el tablero generado por el modelo en la interfaz gráfica.
+     */
     private void paintBoard() {
         Board board = model.getBoard();
         Board initialNumbers = model.getHintsBoard();
@@ -189,6 +276,12 @@ public class Controller {
         setStyleClass(messageLabel, STYLE_MESSAGE_ERROR, false);
     }
 
+    /**
+     * Actualiza la validación visual y los mensajes de error tras un cambio en el tablero.
+     *
+     * @param row fila de la celda modificada
+     * @param col columna de la celda modificada
+     */
     private void updateValidation(int row, int col) {
         int errors = markErrors();
 
@@ -203,6 +296,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Marca visualmente las celdas que contienen errores.
+     *
+     * @return el número total de errores encontrados
+     */
     private int markErrors() {
         int errors = 0;
         for (int row = 0; row < cells.length; row++) {
@@ -217,10 +315,20 @@ public class Controller {
         return errors;
     }
 
+    /**
+     * Comprueba si el número en una celda rompe las reglas del Sudoku.
+     *
+     * @param row fila de la celda
+     * @param col columna de la celda
+     * @return true si el número es inválido, false en caso contrario
+     */
     private boolean isWrong(int row, int col) {
         return !locked[row][col] && model.getEntry(row, col) != 0 && !model.isEntryValid(row, col);
     }
 
+    /**
+     * Proporciona una pista al usuario y la coloca en el tablero.
+     */
     private void onHelp() {
         if (!gameStarted) {
             showMessage("Presiona \"Nuevo juego\" para empezar", true);
@@ -268,6 +376,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Busca y selecciona una celda vacía al azar.
+     *
+     * @return un arreglo con la fila y columna de la celda, o null si no hay vacías
+     */
     private int[] pickEmptyCell() {
         List<int[]> emptyCells = new ArrayList<>();
         for (int row = 0; row < cells.length; row++) {
@@ -280,11 +393,24 @@ public class Controller {
         return emptyCells.isEmpty() ? null : emptyCells.get(random.nextInt(emptyCells.size()));
     }
 
+    /**
+     * Muestra un mensaje en la etiqueta de la interfaz.
+     *
+     * @param text    el texto a mostrar
+     * @param isError indica si el mensaje es de error (para aplicar estilo)
+     */
     private void showMessage(String text, boolean isError) {
         messageLabel.setText(text);
         setStyleClass(messageLabel, STYLE_MESSAGE_ERROR, isError);
     }
 
+    /**
+     * Agrega o elimina una clase CSS de un nodo.
+     *
+     * @param node       el nodo al que se le aplicará el cambio
+     * @param styleClass la clase CSS
+     * @param enabled    true para agregar, false para eliminar
+     */
     private static void setStyleClass(Node node, String styleClass, boolean enabled) {
         boolean present = node.getStyleClass().contains(styleClass);
         if (enabled && !present) {
@@ -294,6 +420,12 @@ public class Controller {
         }
     }
 
+    /**
+     * Obtiene el índice de una celda en el GridPane, manejando valores nulos.
+     *
+     * @param index el índice proporcionado por el GridPane
+     * @return el índice, o 0 si es nulo
+     */
     private static int indexOrZero(Integer index) {
         return index == null ? 0 : index;
     }
