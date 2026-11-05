@@ -80,9 +80,9 @@
 
 /* ---------- Messages ---------- */
 .message {
-    -fx-text-fill: #334155;
-    -fx-font-size: 14px;
-    -fx-text-alignment: center;
+    .message-error {
+    -fx-text-fill: #dc2626;
+    -fx-font-weight: bold;
 }
 
 /* ---------- Buttons ---------- */
