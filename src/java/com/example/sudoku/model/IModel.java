@@ -20,4 +20,6 @@ public interface IModel {
     boolean isEntryValid(int row, int col);
     int getHint(int row, int col) throws UnsupportedOperationException;
 
+    boolean isBoardComplete();
+
 }
