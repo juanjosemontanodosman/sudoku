@@ -323,7 +323,7 @@ public class Controller {
      * @return true si el número es inválido, false en caso contrario
      */
     private boolean isWrong(int row, int col) {
-        return !locked[row][col] && model.getEntry(row, col) != 0 && !model.isEntryValid(row, col);
+        return model.getEntry(row, col) != 0 && !model.isEntryValid(row, col);
     }
 
     /**
