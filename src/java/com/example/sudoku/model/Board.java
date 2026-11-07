@@ -1,7 +1,6 @@
 package com.example.sudoku.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /** Class for setting and getting elements from a board*/
 public class Board extends ArrayList<ArrayList<Integer>> {
@@ -10,7 +9,11 @@ public class Board extends ArrayList<ArrayList<Integer>> {
 
     Board(Board other){ // Copy constructor
         this.initialize(other.size(), other.size());
-        Collections.copy(this, other);
+        for (int i = 0; i < other.size(); i++){
+            for (int j = 0; j < other.size(); j++){
+                this.setEntry(i, j, other.getEntry(i, j));
+            }
+        }
     }
 
     public int getEntry(int row, int col){

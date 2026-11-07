@@ -1,6 +1,4 @@
 package com.example.sudoku.model;
-import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * The Model class is in charge of validating the game's rules
@@ -105,7 +103,7 @@ public class Model implements IModel {
             }
         } while (boardIsIncomplete);
         hintsBoard.generateHints(solutionBoard);
-        Collections.copy(board, hintsBoard);
+        board = new Board(hintsBoard);
     }
 
     /** Public method for accessing the board*/
@@ -163,6 +161,17 @@ public class Model implements IModel {
         return isEntryValid(row, col, getEntry(row, col), board);
     }
 
+    public boolean isBoardComplete(){
+        for (int i = 0; i < boardHeight; i++){
+            for (int j = 0; j< boardWidth; j++){
+                if (!isEntryValid(i, j)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /**
      * Check if a value is valid (does not violate Sudoku's rules) in a given position
      * @param number The value
@@ -198,7 +207,7 @@ public class Model implements IModel {
      * @param row Row where the value is located
      * @param col Column where the value is located
      * @return The solution's value
-     * @throws Exception Throws an error when the usage limit has been reached
+     * @throws UnsupportedOperationException Throws an error when the usage limit has been reached
      */
     public int getHint(int row, int col) throws UnsupportedOperationException{
 
