@@ -103,7 +103,7 @@ public class Model implements IModel {
             }
         } while (boardIsIncomplete);
         hintsBoard.generateHints(solutionBoard);
-        board = new Board(solutionBoard);
+        board = new Board(hintsBoard);
     }
 
     /** Public method for accessing the board*/
