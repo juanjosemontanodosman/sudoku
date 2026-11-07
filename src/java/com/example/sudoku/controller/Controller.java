@@ -292,7 +292,12 @@ public class Controller {
             showMessage("Todavía hay " + errors + (errors == 1 ? " número" : " números")
                     + " que rompen las reglas (en rojo).", true);
         } else {
-            showMessage("Sin errores, ¡sigue así!", false);
+            if (model.isBoardComplete()){
+                alertBox.showInformation("Felicidades", "Felicidades! completaste el juego",
+                        "Presiona nuevo juego para volver a empezar");
+            } else {
+                showMessage("Sin errores, ¡sigue así!", false);
+            }
         }
     }
 

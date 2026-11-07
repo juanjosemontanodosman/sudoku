@@ -32,7 +32,7 @@ public class Model implements IModel {
     private static final int blockHeight = 2;
 
     /** Maximum amount of hints the user gets*/
-    private static final short hintUsagesLimit = 6;
+    private static final short hintUsagesLimit = 2;
 
     /** The number of initial hints the user gets per block*/
     private static final int initialEntriesPerBlock = 2;
@@ -164,7 +164,7 @@ public class Model implements IModel {
     public boolean isBoardComplete(){
         for (int i = 0; i < boardHeight; i++){
             for (int j = 0; j< boardWidth; j++){
-                if (!isEntryValid(i, j)){
+                if (board.isEmpty(i, j)){
                     return false;
                 }
             }
